@@ -1,0 +1,39 @@
+{
+  "parser": "babel-eslint",
+  "extends": [
+    "airbnb"
+  ],
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "rules": {
+    "brace-style": [
+      "error",
+      "stroustrup"
+    ],
+    "no-underscore-dangle": [
+      "error",
+      {
+        "allow": [
+          "_id",
+          "__v"
+        ]
+      }
+    ],
+    "linebreak-style": "off",
+    "import/no-unresolved": "off",
+    "import/no-cycle": "off",
+    "react/prop-types": "off",
+    "react/jsx-one-expression-per-line": "off",
+    "react/prefer-stateless-function": [
+      "error",
+      {
+        "ignorePureComponents": true
+      }
+    ]
+  },
+  "globals": {
+    "BROWSER": true
+  }
+}
