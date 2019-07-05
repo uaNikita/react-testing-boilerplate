@@ -16,6 +16,17 @@ class Block extends Component {
     });
   }
 
+  handleClose = () => {
+    const {
+      props: {
+        id,
+        onClose,
+      },
+    } = this;
+
+    onClose(id);
+  }
+
   render() {
     const {
       props: {
@@ -27,13 +38,24 @@ class Block extends Component {
     return (
       <li className="list-group-item d-flex justify-content-between align-items-center">
         <span>{text}</span>
-        <button
-          type="button"
-          className="btn btn-light"
-          onClick={this.handleChangeStatus}
-        >
-          {done ? '👍' : '📌'}
-        </button>
+
+        <div className="buttons">
+          <button
+            type="button"
+            className="btn btn-light"
+            onClick={this.handleChangeStatus}
+          >
+            {done ? '👍' : '📌'}
+          </button>
+
+          <button
+            type="button"
+            className="btn btn-light"
+            onClick={this.handleClose}
+          >
+            {'❌'}
+          </button>
+        </div>
       </li>
     );
   }

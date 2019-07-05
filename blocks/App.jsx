@@ -38,22 +38,24 @@ class Block extends Component {
   }
 
   handleDelete = (id) => {
-
+    this.setState(({ list }) => ({
+      list: list.filter(i => i.id !== id),
+    }));
   }
 
   handleUpdate = (id, data) => {
-    const {
-      state: {
+    this.setState(({ list }) => {
+      const item = list.filter(i => i.id === id)[0];
+
+      Object.assign(item, data);
+
+      this.setState({
         list,
-      },
-    } = this;
+      });
 
-    const item = list.filter(i => i.id === id)[0];
-
-    Object.assign(item, data);
-
-    this.setState({
-      list,
+      return {
+        list,
+      };
     });
   }
 
@@ -110,8 +112,8 @@ class Block extends Component {
           {listToShow.map(item => (
             <Todo
               key={item.id}
-              onEdit={this.handleDelete}
               onUpdate={this.handleUpdate}
+              onClose={this.handleDelete}
               {...item}
             />
           ))}
