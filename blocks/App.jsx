@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 
+import FilterButton from './FilterButton';
 import Todo from './Todo';
+
+const filters = ['all', 'active', 'completed'];
 
 class Block extends Component {
   state = {
+    filter: 'all',
     list: [
       {
         id: 0,
@@ -53,16 +57,34 @@ class Block extends Component {
     });
   }
 
+  handleChangeFilter = (filter) => {
+    this.setState({
+      filter,
+    });
+  }
+
   render() {
     const {
       state: {
+        filter,
         list,
       },
     } = this;
 
+    let listToShow = list;
+
+    if (filter !== 'all') {
+      let completed = true;
+
+      if (filter === 'active') {
+        completed = false;
+      }
+
+      listToShow = list.filter(({ done }) => done === completed);
+    }
+
     return (
       <div className="container">
-
         <div className="row mt-5">
           <input
             id="to-be-done"
@@ -73,14 +95,19 @@ class Block extends Component {
 
         <div className="row justify-content-center align-items-center">
           <div className="btn-group mt-5 mb-3">
-            <button type="button" className="btn btn-secondary">All</button>
-            <button type="button" className="btn btn-secondary">Active</button>
-            <button type="button" className="btn btn-secondary">Completed</button>
+            {filters.map(value => (
+              <FilterButton
+                key={value}
+                value={value}
+                active={filter === value}
+                onClick={this.handleChangeFilter}
+              />
+            ))}
           </div>
         </div>
 
         <ul className="row list-group">
-          {list.map(item => (
+          {listToShow.map(item => (
             <Todo
               key={item.id}
               onEdit={this.handleDelete}
@@ -89,7 +116,6 @@ class Block extends Component {
             />
           ))}
         </ul>
-
       </div>
     );
   }
