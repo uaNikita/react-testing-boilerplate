@@ -47,7 +47,7 @@ class Block extends Component {
           >
             {done ? '👍' : '📌'}
           </button>
-
+          {' '}
           <button
             type="button"
             className="btn btn-light"

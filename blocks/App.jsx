@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import TodoInput from './TodoInput';
 import FilterButton from './FilterButton';
 import Todo from './Todo';
 
@@ -49,10 +50,6 @@ class Block extends Component {
 
       Object.assign(item, data);
 
-      this.setState({
-        list,
-      });
-
       return {
         list,
       };
@@ -62,6 +59,20 @@ class Block extends Component {
   handleChangeFilter = (filter) => {
     this.setState({
       filter,
+    });
+  }
+
+  handleAdd = (text) => {
+    this.setState(({ list }) => {
+      list.push({
+        id: list[list.length - 1].id + 1,
+        text,
+        done: false,
+      });
+
+      return {
+        list,
+      };
     });
   }
 
@@ -88,11 +99,7 @@ class Block extends Component {
     return (
       <div className="container">
         <div className="row mt-5">
-          <input
-            id="to-be-done"
-            className="form-control"
-            placeholder="What needs to be done?"
-          />
+          <TodoInput onAdd={this.handleAdd} />
         </div>
 
         <div className="row justify-content-center align-items-center">
